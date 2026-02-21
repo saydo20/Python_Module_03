@@ -13,13 +13,12 @@ else:
             i += 1
         print(f"Scores processed: {list}")
         print(f"Total players: {len(sys.argv) - 1}")
-        total = 0
-        for number in list:
-            total += number
-        print(f"Total score: {total}")
-        print(f"Average score: {total / (len(sys.argv) - 1)}")
+        print(f"Total score: {sum(list)}")
+        print(f"Average score: {sum(list) / (len(sys.argv) - 1)}")
         print(f"High score: {max(list)}")
         print(f"Low score: {min(list)}")
         print(f"Score range: {max(list) - min(list)}\n")
     except ValueError:
         print("invalid scores")
+    except Exception as Error:
+        print(f"Unexpected error: {Error}")
