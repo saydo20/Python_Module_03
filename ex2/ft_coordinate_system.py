@@ -1,18 +1,18 @@
 import math
 
 
-def count_len(data: any) -> int:
+def count_len(data: list | tuple | str) -> int:
     i = 0
     for element in data:
         i += 1
     return i
 
 
-def coordinates_parser(coordinates: str):
+def coordinates_parser(coordinates: str) -> tuple:
     try:
         parsed = coordinates.split(",")
         if count_len(parsed) != 3:
-            raise NotImplementedError("invalid coordinates")
+            raise ValueError("invalid coordinates")
         i = 0
         while i < count_len(parsed):
             parsed[i] = int(parsed[i])
@@ -26,7 +26,7 @@ def coordinates_parser(coordinates: str):
     return tuple(parsed)
 
 
-def coordinate_system(coordinates: list):
+def coordinate_system(coordinates: list) -> tuple[int, int, int]:
     if count_len(coordinates) != 3:
         raise ValueError("the cooredinates must has 3 numbers")
     i = 0
@@ -37,7 +37,7 @@ def coordinate_system(coordinates: list):
     return tuple(coordinates)
 
 
-def count_distance(coordinates: list, coordinates_two: list):
+def count_distance(coordinates: list, coordinates_two: list) -> None:
     x1, y1, z1 = coordinates
     x2, y2, z2 = coordinates_two
     distance = math.sqrt((x2-x1)**2 + (y2-y1)**2 + (z2-z1)**2)
@@ -45,7 +45,7 @@ def count_distance(coordinates: list, coordinates_two: list):
           f"{tuple(coordinates)}: {distance:.2f}")
 
 
-def position_tracker():
+def position_tracker() -> None:
     try:
         coordinates = [10, 20, 5]
         coordinates_two = [0, 0, 0]
@@ -69,7 +69,7 @@ def position_tracker():
         print(f"Error : {error}")
 
 
-def main():
+def main() -> None:
     try:
         position_tracker()
     except Exception as error:

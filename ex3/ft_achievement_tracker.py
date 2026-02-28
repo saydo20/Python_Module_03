@@ -1,4 +1,4 @@
-def achievement_tracker(alice: list, bob: list, charlie: list):
+def achievement_tracker(alice: list, bob: list, charlie: list) -> None:
     alice = set(alice)
     bob = set(bob)
     charlie = set(charlie)
@@ -22,14 +22,14 @@ def achievement_tracker(alice: list, bob: list, charlie: list):
     print(f"Rare achievements (1 player): {rare}")
     print()
     alice_bob_common = alice.intersection(bob)
-    print(f"Alice vs Bob common:{alice_bob_common}")
+    print(f"Alice vs Bob common: {alice_bob_common}")
     alice_unique = alice.difference(bob)
     print(f"Alice unique: {alice_unique}")
     bob_unique = bob.difference(alice)
     print(f"Bob unique: {bob_unique}")
 
 
-def achievement_tracker_test():
+def achievement_tracker_test() -> None:
     alice = ['first_kill', 'level_10', 'treasure_hunter', 'speed_demon']
     bob = ['first_kill', 'level_10', 'boss_slayer', 'collector']
     charlie = ['level_10', 'treasure_hunter', 'boss_slayer',
@@ -37,7 +37,7 @@ def achievement_tracker_test():
     achievement_tracker(alice, bob, charlie)
 
 
-def main():
+def main() -> None:
     try:
         achievement_tracker_test()
     except Exception as error:
