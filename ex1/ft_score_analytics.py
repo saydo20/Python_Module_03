@@ -11,6 +11,8 @@ def score_analytics() -> None:
             scores = []
             i = 1
             while i < len(sys.argv):
+                if int(sys.argv[i]) < 0:
+                    raise ValueError("the score must be positive")
                 scores = scores + [int(sys.argv[i])]
                 i += 1
             print(f"Scores processed: {scores}")
@@ -20,8 +22,8 @@ def score_analytics() -> None:
             print(f"High score: {max(scores)}")
             print(f"Low score: {min(scores)}")
             print(f"Score range: {max(scores) - min(scores)}\n")
-        except ValueError:
-            print("invalid scores")
+        except ValueError as error:
+            print(f"invalid scores : {error}")
         except Exception as Error:
             print(f"Unexpected error: {Error}")
 

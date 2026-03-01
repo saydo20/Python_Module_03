@@ -15,6 +15,8 @@ def coordinates_parser(coordinates: str) -> tuple:
             raise ValueError("invalid coordinates")
         i = 0
         while i < count_len(parsed):
+            if int(parsed[i]) < 0:
+                raise ValueError("the values must be positive")
             parsed[i] = int(parsed[i])
             i += 1
         parsed = tuple(parsed)
@@ -31,6 +33,8 @@ def coordinate_system(coordinates: list) -> tuple[int, int, int]:
         raise ValueError("the cooredinates must has 3 numbers")
     i = 0
     while i < count_len(coordinates):
+        if int(coordinates[i]) < 0:
+            raise ValueError("the values must be positive")
         coordinates[i] = int(coordinates[i])
         i += 1
     print(f"Position created: {tuple(coordinates)}")

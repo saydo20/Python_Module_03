@@ -41,6 +41,9 @@ def list_comprehension(players: list) -> None:
     print(f"High scorers ({high_score_value}): {high_score}")
 
     scores_doubled = [sd["score"] * 2 for sd in players]
+    for i in scores_doubled:
+        if i < 0:
+            raise ValueError("the score must be positive")
     print(f"Scores doubled: {scores_doubled}")
 
     active_players = [ap["name"] for ap in players if ap["status"] == "active"]

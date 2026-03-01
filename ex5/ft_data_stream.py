@@ -91,6 +91,8 @@ def data_stream() -> None:
     i = 1
     for event in processing(event_number):
         i += 1
+        if event['level'] < 0:
+            raise ValueError("the level must be positive")
         if event['event'] <= 3:
             print(f"Event {event['event']}: Player {event['name']}"
                   f" (level {event['level']}) {event['actions']}")

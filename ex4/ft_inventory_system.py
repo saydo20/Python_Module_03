@@ -1,15 +1,7 @@
 import sys
 
-items_base = {
-    "sword": {"type": "weapon", "value": 150},
-    "shield": {"type": "armor", "value": 120},
-    "armor": {"type": "armor", "value": 200},
-    "helmet": {"type": "armor", "value": 80},
-    "potion": {"type": "consumable", "value": 25},
-}
 
-
-def inventory_parser() -> dict:
+def inventory_parser(items_base: dict) -> dict:
     if len(sys.argv) <= 1:
         raise ValueError("the program must has arguments")
     inventory = {}
@@ -18,6 +10,8 @@ def inventory_parser() -> dict:
         if len(element) != 2 or element[0] == "":
             raise ValueError("argument must be key:quantity")
         name, quantity = element
+        if int(quantity) < 0:
+            raise ValueError("the value must be positive")
         item_info = items_base.get(
             name, {"type": "unknown", "value": 0}
         )
@@ -34,7 +28,7 @@ def inventory_parser() -> dict:
     return inventory
 
 
-def get_max(inventory) -> tuple[int, int]:
+def get_max(inventory: dict) -> tuple[int, int]:
     max_key, *rest = inventory.keys()
     max_value = inventory[max_key]["quantity"]
 
@@ -46,7 +40,7 @@ def get_max(inventory) -> tuple[int, int]:
     return max_key, max_value
 
 
-def get_min(inventory) -> tuple[int, int]:
+def get_min(inventory: dict) -> tuple[int, int]:
     min_key, *rest = inventory.keys()
     min_value = inventory[min_key]["quantity"]
 
@@ -62,21 +56,28 @@ def manage_categories(inventory: dict) -> None:
     print("\n=== Item Categories ===")
     moderate = {}
     scarce = {}
+    abundant = {}
 
     for key, item in inventory.items():
         qty = item["quantity"]
-        if qty >= 5:
+        if qty >= 5 and qty <= 10:
             moderate[key] = qty
-        else:
+        elif qty <= 5:
             scarce[key] = qty
-    print(f"Moderate: {moderate}")
-    print(f"Scarce: {scarce}")
+        else:
+            abundant[key] = qty
+    if moderate:
+        print(f"Moderate: {moderate}")
+    if scarce:
+        print(f"Scarce: {scarce}")
+    if abundant:
+        print(f"abundant: {abundant}")
 
 
 def suggestions_manager(inventory: dict) -> None:
     print("\n=== Management Suggestions ===")
     suggestions = []
-    for key, value in inventory.items():
+    for value in inventory.values():
         if value["quantity"] <= 1:
             suggestions += [value["name"]]
     print("Restock needed: ", end="")
@@ -131,9 +132,18 @@ def inventory_system(inventory: dict) -> None:
     print(f"Sample lookup - 'sword' in inventory : {'sword' in inventory}")
 
 
+items_base = {
+    "sword": {"type": "weapon", "value": 150},
+    "shield": {"type": "armor", "value": 120},
+    "armor": {"type": "armor", "value": 200},
+    "helmet": {"type": "armor", "value": 80},
+    "potion": {"type": "consumable", "value": 25},
+}
+
+
 def main() -> None:
     try:
-        inventory = inventory_parser()
+        inventory = inventory_parser(items_base)
         inventory_system(inventory)
     except Exception as error:
         print(f"error : {error}")
